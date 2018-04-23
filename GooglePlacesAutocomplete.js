@@ -215,7 +215,7 @@ export default class GooglePlacesAutocomplete extends Component {
         // already requesting
         return;
       }
-
+      
       this._abortRequests();
 
       // display loader
@@ -231,6 +231,10 @@ export default class GooglePlacesAutocomplete extends Component {
 
         if (request.status === 200) {
           const responseJSON = JSON.parse(request.responseText);
+
+          this.props.setLocation
+          ? this.props.setLocation(responseJSON)
+          : null;
 
           if (responseJSON.status === 'OK') {
             if (this._isMounted === true) {
@@ -672,6 +676,7 @@ export default class GooglePlacesAutocomplete extends Component {
       onFocus,
       ...userProps
     } = this.props.textInputProps;
+    
     return (
       <View
         style={[this.props.suppressDefaultStyles ? {} : defaultStyles.container, this.props.styles.container]}
